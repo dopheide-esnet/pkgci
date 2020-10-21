@@ -17,14 +17,14 @@ jobs:
       - id: install
         run: pip install zkg
       - id: zkg_list
-        run: echo "::set-output name=packages::{\"packages\":[$($HOME/.local/bin/zkg list all | awk '{print "\"" $1 "\""}' | paste -d, -s -)]}"
+        run: echo "::set-output name=packages::{\"packages\":[$($HOME/.local/bin/zkg list all | head -n 5 | awk '{print "\"" $1 "\""}' | paste -d, -s -)]}"
 
   run_ci:
     name: Test ${{ matrix.packages }}
     needs: get_zkgs
     continue-on-error: true
     outputs:
-      results: ${{ steps.run_ci.outputs.results }}
+      results: ${{ steps.zkg_test.outputs.results }}
     runs-on: ubuntu-20.04
     container:
       image: grigorescu/zeek_centos_8:latest
@@ -34,7 +34,8 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - run: |
+    - id: zkg_test
+      run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
         zkg test ${{ matrix.packages }} || $GITHUB_WORKSPACE/debug.sh ${{ matrix.packages }}
         echo "::set-output name=results::{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}"
