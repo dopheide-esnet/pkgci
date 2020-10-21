@@ -23,8 +23,6 @@ jobs:
     name: Test ${{ matrix.packages }}
     needs: get_zkgs
     continue-on-error: true
-    outputs: ${{fromJson("abc")}}
-    #outputs: ${{fromJson("{\"${{ matrix.package }}\":\"${{ steps.zkg_test.outputs.results }}\"")}}
     runs-on: ubuntu-20.04
     container:
       image: grigorescu/zeek_centos_8:latest
@@ -47,4 +45,4 @@ jobs:
     if: true
     runs-on: ubuntu-20.04
     steps:
-      - run: echo ${{ needs.run_ci.outputs }}
+      - run: echo ${{ toJson(strategy) }}
