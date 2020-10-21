@@ -45,4 +45,4 @@ jobs:
     if: true
     runs-on: ubuntu-20.04
     steps:
-      - run: echo ${{ needs.run_ci.outputs }}
+      - run: echo ${{ fromJson(needs.run_ci.outputs) }}
