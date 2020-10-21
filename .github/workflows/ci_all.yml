@@ -23,7 +23,11 @@ jobs:
     name: Test ${{ matrix.packages }}
     needs: get_zkgs
     runs-on: ubuntu-20.04
+    container:
+      image: grigorescu/zeek_centos_7:latest
     strategy:
       matrix: ${{fromJson(needs.get_zkgs.outputs.packages)}}
     steps:
-    - run: echo ${{ matrix.packages }}
+    - run: |
+        export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
+        zkg test ${{ matrix.packages }}
