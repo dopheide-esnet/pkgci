@@ -44,5 +44,7 @@ jobs:
     # We force this to run, even if run_ci jobs have failed
     if: true
     runs-on: ubuntu-20.04
+    env:
+      NEEDS_CONTEXT: ${{ toJson(needs) }}
     steps:
-      - run: echo ${{ toJson(strategy) }}
+      - run: echo "$NEEDS_CONTEXT"
