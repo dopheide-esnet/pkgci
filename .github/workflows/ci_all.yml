@@ -27,7 +27,10 @@ jobs:
       image: grigorescu/zeek_centos_7:latest
     strategy:
       matrix: ${{fromJson(needs.get_zkgs.outputs.packages)}}
+      fail-fast: false
     steps:
+    - uses: actions/checkout@v1
+
     - run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
-        zkg test ${{ matrix.packages }}
+        zkg test ${{ matrix.packages }} || $GITHUB_WORKSPACE/debug.sh
