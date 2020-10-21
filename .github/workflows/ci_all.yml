@@ -26,7 +26,7 @@ jobs:
       results: ${{ steps.run_ci.outputs.results }}
     runs-on: ubuntu-20.04
     container:
-      image: grigorescu/zeek_centos_7:latest
+      image: grigorescu/zeek_centos_8:latest
     strategy:
       matrix: ${{fromJson(needs.get_zkgs.outputs.packages)}}
       fail-fast: false
@@ -41,5 +41,6 @@ jobs:
   summary:
     name: Summarize Results
     needs: run_ci
+    runs-on: ubuntu-20.04
     steps:
       - run: echo ${{needs.run_ci.outputs.results}}
