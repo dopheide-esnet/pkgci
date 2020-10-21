@@ -23,7 +23,7 @@ jobs:
     name: Test ${{ matrix.packages }}
     needs: get_zkgs
     continue-on-error: true
-    outputs: ${{fromJson("{\"a\":\"b\"}")}}
+    outputs: ${{fromJson("abc")}}
     #outputs: ${{fromJson("{\"${{ matrix.package }}\":\"${{ steps.zkg_test.outputs.results }}\"")}}
     runs-on: ubuntu-20.04
     container:
