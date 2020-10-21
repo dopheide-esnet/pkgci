@@ -1,0 +1,29 @@
+# Run CI on all Zeek packages
+name: Zeek Package CI
+
+on:
+  push:
+  schedule:
+    - cron:  '0 4 * * *'
+
+jobs:
+  get_zkgs:
+    name: Get package list
+    runs-on: ubuntu-20.04
+    outputs:
+      packages: ${{ steps.zkg_list.outputs.packages }}
+
+    steps:
+      - id: install
+        run: pip install zkg
+      - id: zkg_list
+        run: echo "::set-output name=packages::{\"packages\":[$(zkg list all | awk '{print \"\\\"\" $1 \"\\\"\"}' | paste -d, -s -)]}"
+
+  run_ci:
+    name: Test ${{ matrix.packages }}
+    needs: get_zkgs
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix: ${{fromJson(needs.get_zkgs.outputs.packages)}}
+    steps:
+    - run: echo ${{ matrix.packages }}
