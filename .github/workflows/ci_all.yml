@@ -41,6 +41,8 @@ jobs:
   summary:
     name: Summarize Results
     needs: run_ci
+    # We force this to run, even if run_ci jobs have failed
+    if: true
     runs-on: ubuntu-20.04
     steps:
       - run: echo ${{needs.run_ci.outputs.results}}
