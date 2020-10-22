@@ -24,8 +24,8 @@ jobs:
     needs: get_zkgs
     continue-on-error: true
     runs-on: ubuntu-20.04
-    container:
-      image: grigorescu/zeek_centos_8:latest
+#    container:
+#      image: grigorescu/zeek_centos_8:latest
     strategy:
       matrix: ${{fromJson(needs.get_zkgs.outputs.packages)}}
       fail-fast: false
@@ -35,7 +35,7 @@ jobs:
     - id: zkg_test
       run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
-        echo ${{ format('{"{0}": "{1}"}', github.job, 'steps.zkg_test.outputs.packages') }}
+        echo ${{ format('\{"{0}": "{1}"\}', github.job, 'steps.zkg_test.outputs.packages') }}
         echo zkg test ${{ matrix.packages }} || $GITHUB_WORKSPACE/debug.sh ${{ matrix.packages }}
         echo "::set-output name=packages::{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}"
 
