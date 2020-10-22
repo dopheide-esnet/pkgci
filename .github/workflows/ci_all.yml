@@ -26,6 +26,7 @@ jobs:
     runs-on: ubuntu-20.04
     container:
       image: grigorescu/zeek_centos_8:latest
+    outputs: "${{fromJson(steps.zkg_test.outputs)}}"
     strategy:
       matrix: ${{fromJson(needs.get_zkgs.outputs.packages)}}
       fail-fast: false
@@ -36,7 +37,6 @@ jobs:
       run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
         zkg test ${{ matrix.packages }} || $GITHUB_WORKSPACE/debug.sh ${{ matrix.packages }}
-        echo "::save-state name=packages::{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}"
         echo "::set-output name=packages::{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}"
         echo "::warning file=app.js,line=1,col=5::Missing semicolon"
 
