@@ -29,12 +29,11 @@ jobs:
     strategy:
       matrix: ${{fromJson(needs.get_zkgs.outputs.packages)}}
       fail-fast: false
+    outputs: {package: "123"}
     steps:
     - uses: actions/checkout@v1
 
     - id: zkg_test
-      outputs:
-        package: package
       run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
         zkg test ${{ matrix.packages }} || $GITHUB_WORKSPACE/debug.sh ${{ matrix.packages }}
