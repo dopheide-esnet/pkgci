@@ -29,8 +29,7 @@ jobs:
     strategy:
       matrix: ${{fromJson(needs.get_zkgs.outputs.packages)}}
       fail-fast: false
-    outputs:
-      packages: ${{ toJson(steps.zkg_test.outputs) }}
+    outputs: ${{ toJson(steps.zkg_test.outputs) }}
     steps:
     - uses: actions/checkout@v1
 
