@@ -36,6 +36,7 @@ jobs:
       run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
         zkg test ${{ matrix.packages }} || $GITHUB_WORKSPACE/debug.sh ${{ matrix.packages }}
+        echo "::save-state name=packages::{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}"
         echo "::set-output name=packages::{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}"
         echo "::warning file=app.js,line=1,col=5::Missing semicolon"
 
@@ -49,3 +50,4 @@ jobs:
       NEEDS_CONTEXT: ${{ toJson(needs) }}
     steps:
       - run: echo "$NEEDS_CONTEXT"
+      - run: env
