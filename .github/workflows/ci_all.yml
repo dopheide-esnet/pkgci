@@ -30,7 +30,7 @@ jobs:
       matrix: ${{fromJson(needs.get_zkgs.outputs.packages)}}
       fail-fast: false
     outputs:
-      packages: ${{ steps.zkg_test.outputs.packages }}
+      packages: ${{ toJson(steps.zkg_test.outputs) }}
     steps:
     - uses: actions/checkout@v1
 
@@ -38,7 +38,7 @@ jobs:
       run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
         echo zkg test ${{ matrix.packages }} || $GITHUB_WORKSPACE/debug.sh ${{ matrix.packages }}
-        echo "::set-output name=packages::[{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}]"
+        echo "::set-output name=${{ matrix.packages }}::[{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}]"
 
   summary:
     name: Summarize Results
