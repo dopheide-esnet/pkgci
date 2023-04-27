@@ -4,7 +4,7 @@ name: Zeek Package CI
 on:
   push:
   schedule:
-    - cron:  '0 4 * * *'
+    - cron:  '* 4 * * *'
 
 jobs:
   get_zkgs:
@@ -29,7 +29,8 @@ jobs:
     strategy:
       matrix: ${{fromJson(needs.get_zkgs.outputs.packages)}}
       fail-fast: false
-    outputs: {"${{ matrix.packages }}":"${{ steps.zkg_test.outputs }}"}
+    outputs: {"package":steps.zkg_test.outputs}
+#    outputs: {"${{ matrix.packages }}":"${{ steps.zkg_test.outputs }}"}
     steps:
     - uses: actions/checkout@v1
 
