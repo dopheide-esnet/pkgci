@@ -17,8 +17,8 @@ jobs:
       - id: install
         run: pip install zkg
       - id: zkg_list
-        run: echo "::set-output name=packages::{\"packages\":[$($HOME/.local/bin/zkg list all | head -n 5 | awk '{print "\"" $1 "\""}' | paste -d, -s -)]}"
-#        run: echo "{packages}={{\"packages\":[$($HOME/.local/bin/zkg list all | head -n 5 | awk '{print "\"" $1 "\""}' | paste -d, -s -)]}}" >> $GITHUB_OUTPUT
+#        run: echo "::set-output name=packages::{\"packages\":[$($HOME/.local/bin/zkg list all | head -n 5 | awk '{print "\"" $1 "\""}' | paste -d, -s -)]}"
+        run: echo "packages={\"packages\":[$($HOME/.local/bin/zkg list all | head -n 5 | awk '{print "\"" $1 "\""}' | paste -d, -s -)]}" >> $GITHUB_OUTPUT
 
   run_ci:
     name: Test ${{ matrix.packages }}
@@ -41,7 +41,7 @@ jobs:
       run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
         echo zkg test ${{ matrix.packages }} || $GITHUB_WORKSPACE/debug.sh ${{ matrix.packages }}
-        echo "{${{ matrix.packages }}}={[{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}]}" >> $GITHUB_OUTPUT
+        echo "${{ matrix.packages }}=[{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}]" >> $GITHUB_OUTPUT
 
   summary:
     name: Summarize Results
@@ -53,4 +53,5 @@ jobs:
       NEEDS_CONTEXT: ${{ toJson(needs) }}
     steps:
       - run: echo "$NEEDS_CONTEXT"
+      - run: echo "DOP ${{ steps.zkg_test.outputs}}"
       - run: env
