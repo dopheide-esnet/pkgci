@@ -54,5 +54,5 @@ jobs:
       NEEDS_CONTEXT: ${{ toJson(needs) }}
     steps:
       - run: echo "$NEEDS_CONTEXT"
-      - run: echo "DOP ${{ steps.zkg_test.outputs.DOP_TEST}}"
+      - run: echo "DOP ${{ steps.run_ci.outputs.DOP_TEST}}"
       - run: env
