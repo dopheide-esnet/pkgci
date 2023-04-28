@@ -35,12 +35,13 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
+#        echo "::set-output name=${{ matrix.packages }}::[{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}]"
+
     - id: zkg_test
       run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
         echo zkg test ${{ matrix.packages }} || $GITHUB_WORKSPACE/debug.sh ${{ matrix.packages }}
-        echo "::set-output name=${{ matrix.packages }}::[{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}]"
-#        echo "{${{ matrix.packages }}}={[{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}]}" >> $GITHUB_OUTPUT
+        echo "{${{ matrix.packages }}}={[{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}]}" >> $GITHUB_OUTPUT
 
   summary:
     name: Summarize Results
