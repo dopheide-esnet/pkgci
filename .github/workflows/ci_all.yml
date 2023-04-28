@@ -19,6 +19,7 @@ jobs:
       - id: zkg_list
 #        run: echo "::set-output name=packages::{\"packages\":[$($HOME/.local/bin/zkg list all | head -n 5 | awk '{print "\"" $1 "\""}' | paste -d, -s -)]}"
         run: echo "packages={\"packages\":[$($HOME/.local/bin/zkg list all | head -n 5 | awk '{print "\"" $1 "\""}' | paste -d, -s -)]}" >> $GITHUB_OUTPUT
+        run: echo $GITHUB_OUTPUT
 
   run_ci:
     name: Test ${{ matrix.packages }}
