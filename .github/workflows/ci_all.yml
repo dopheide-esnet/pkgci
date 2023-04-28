@@ -30,7 +30,10 @@ jobs:
     strategy:
       matrix: ${{fromJson(needs.get_zkgs.outputs.packages)}}
       fail-fast: false
-    outputs: {"package":"${{ steps.zkg_test.outputs.DOP_TEST }}"}
+#    outputs: {"package":"${{ steps.zkg_test.outputs.DOP_TEST }}"}
+    outputs:
+      package: "${{ steps.zkg_test.outputs.DOP_TEST }}"
+      all_stuff: $GITHUB_OUTPUT
 #    outputs: {"${{ matrix.packages }}":"${{ steps.zkg_test.outputs }}"}
     steps:
     - uses: actions/checkout@v1
@@ -54,6 +57,6 @@ jobs:
       NEEDS_CONTEXT: ${{ toJson(needs) }}
     steps:
       - run: echo "$NEEDS_CONTEXT"
-      - run: echo "DOP ${{ needs.run_ci.outputs.DOP_TEST }}"
+      - run: echo "DOP ${{ needs.run_ci.outputs.all_stuff }}"
       - run: echo "DOP2 ${{ needs.run_ci.outputs.package }}"
       - run: env
