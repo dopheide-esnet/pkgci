@@ -42,6 +42,7 @@ jobs:
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
         echo zkg test ${{ matrix.packages }} || $GITHUB_WORKSPACE/debug.sh ${{ matrix.packages }}
         echo "${{ matrix.packages }}=[{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}]" >> $GITHUB_OUTPUT
+        echo "DOP_TEST=DOP_VALUE" >> $GITHUB_OUTPUT
 
   summary:
     name: Summarize Results
@@ -53,5 +54,5 @@ jobs:
       NEEDS_CONTEXT: ${{ toJson(needs) }}
     steps:
       - run: echo "$NEEDS_CONTEXT"
-      - run: echo "DOP ${{ steps.zkg_test.outputs}}"
+      - run: echo "DOP ${{ steps.zkg_test.outputs.DOP_TEST}}"
       - run: env
