@@ -25,7 +25,7 @@ jobs:
     needs: get_zkgs
     continue-on-error: true
     runs-on: ubuntu-20.04
-    strategy:
+    parallel:
       matrix: ${{fromJson(needs.get_zkgs.outputs.packages)}}
       fail-fast: false
     outputs:
