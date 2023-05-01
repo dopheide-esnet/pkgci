@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-20.04
     outputs:
       packages: ${{ steps.zkg_list.outputs.packages }}
-
     steps:
       - id: install
         run: pip install zkg
@@ -42,6 +41,11 @@ jobs:
         echo zkg test ${{ matrix.packages }} || $GITHUB_WORKSPACE/debug.sh ${{ matrix.packages }}
         echo "${{ matrix.packages }}=[{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}]" >> $GITHUB_OUTPUT
         echo "DOP_TEST=DOP_VALUE_${{ matrix.packages}}" >> $GITHUB_OUTPUT
+    - uses: actions/upload-artifact@v3
+    - id: zkg_test2
+      run: |
+        echo "blaa"
+
 
   summary:
     name: Summarize Results
