@@ -17,22 +17,17 @@ jobs:
       - id: install
         run: pip install zkg
       - id: zkg_list
-#        run: echo "::set-output name=packages::{\"packages\":[$($HOME/.local/bin/zkg list all | head -n 5 | awk '{print "\"" $1 "\""}' | paste -d, -s -)]}"
         run: | 
           echo "packages={\"packages\":[$($HOME/.local/bin/zkg list all | head -n 5 | awk '{print "\"" $1 "\""}' | paste -d, -s -)]}" >> $GITHUB_OUTPUT
-#          echo $GITHUB_OUTPUT
 
   run_ci:
     name: Test ${{ matrix.packages }}
     needs: get_zkgs
     continue-on-error: true
     runs-on: ubuntu-20.04
-#    container:
-#      image: grigorescu/zeek_centos_8:latest
     strategy:
       matrix: ${{fromJson(needs.get_zkgs.outputs.packages)}}
       fail-fast: false
-#    outputs: {"package":"${{ steps.zkg_test.outputs.DOP_TEST }}"}
     outputs:
       package: "${{ steps.zkg_test.outputs.DOP_TEST }}"
       all_stuff: "${{ matrix.package }}"
@@ -56,7 +51,7 @@ jobs:
     env:
       NEEDS_CONTEXT: ${{ toJson(needs) }}
     steps:
-      - run: echo "$NEEDS_CONTEXT"
+      - run: echo "${NEEDS_CONTEXT}"
       - run: echo "DOP ${{ needs.run_ci.outputs.all_stuff }}"
       - run: echo "DOP2 ${{ needs.run_ci.outputs.package }}"
       - run: env
