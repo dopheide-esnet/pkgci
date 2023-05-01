@@ -35,7 +35,7 @@ jobs:
 #    outputs: {"package":"${{ steps.zkg_test.outputs.DOP_TEST }}"}
     outputs:
       package: "${{ steps.zkg_test.outputs.DOP_TEST }}"
-      all_stuff: "${{fromJson(needs.get_zkgs.outputs.packages }}"
+      all_stuff: "${{ matrix.package }}"
 #    outputs: {"${{ matrix.packages }}":"${{ steps.zkg_test.outputs }}"}
     steps:
     - uses: actions/checkout@v1
