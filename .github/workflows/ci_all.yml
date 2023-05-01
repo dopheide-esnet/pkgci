@@ -46,7 +46,6 @@ jobs:
         echo "DOP_TEST=DOP_VALUE_${{ matrix.packages}}" >> $GITHUB_OUTPUT
     - uses: actions/upload-artifact@v3
       with:
-	# TODO, this contains '/' which isn't liked...
         name: ${{ blaa }}
         path: test_data
         if-no-files-found: warn
