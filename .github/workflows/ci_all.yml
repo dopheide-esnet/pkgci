@@ -40,6 +40,7 @@ jobs:
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
         echo zkg test ${{ matrix.packages }} || $GITHUB_WORKSPACE/debug.sh ${{ matrix.packages }}
         echo "${{ matrix.packages }}=[{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}]" >> $GITHUB_OUTPUT
+        echo "${{ matrix.packages }}" > test_data
         echo "DOP_TEST=DOP_VALUE_${{ matrix.packages}}" >> $GITHUB_OUTPUT
     - uses: actions/upload-artifact@v3
       with:
