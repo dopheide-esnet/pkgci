@@ -34,7 +34,8 @@ jobs:
 #    outputs: {"${{ matrix.packages }}":"${{ steps.zkg_test.outputs }}"}
     steps:
 # actions/checkout@v1
-    - uses: actions/upload-artifact@v3
+# actions/upload-artifact@v3
+    - uses: actions/checkout@v1
     - id: zkg_test
       run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
