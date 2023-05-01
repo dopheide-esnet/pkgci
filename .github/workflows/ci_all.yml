@@ -42,6 +42,10 @@ jobs:
         echo "${{ matrix.packages }}=[{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}]" >> $GITHUB_OUTPUT
         echo "DOP_TEST=DOP_VALUE_${{ matrix.packages}}" >> $GITHUB_OUTPUT
     - uses: actions/upload-artifact@v3
+      with:
+        name: ${{ hashfiles('matrix.packages') || 'none' }}
+        path: test_data
+        if-no-files-found: warn
     - id: zkg_test2
       run: |
         echo "blaa"
