@@ -64,7 +64,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
       - run: |
-          echo "$(cat */test_data/*)"
+          echo "$(cat */test_data)"
         id: retrieve_data
       - run: echo "DOP ${{ needs.run_ci.outputs.all_stuff }}"
       - run: echo "DOP2 ${{ needs.run_ci.outputs.package }}"
