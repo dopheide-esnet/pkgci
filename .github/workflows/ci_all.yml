@@ -51,7 +51,7 @@ jobs:
     env:
       NEEDS_CONTEXT: ${{ toJson(needs) }}
     steps:
-      - run: echo "${NEEDS_CONTEXT}"
+      - run: echo $NEEDS_CONTEXT
       - run: echo "DOP ${{ needs.run_ci.outputs.all_stuff }}"
       - run: echo "DOP2 ${{ needs.run_ci.outputs.package }}"
       - run: env
