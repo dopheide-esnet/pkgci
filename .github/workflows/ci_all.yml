@@ -38,7 +38,7 @@ jobs:
     - id: doptest
       run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
-        which zkg
+        zeek --version
         zkg test ${{ matrix.packages }}
     - id: zkg_test
       run: |
