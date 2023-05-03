@@ -37,6 +37,8 @@ jobs:
       run: |
         pip install zkg
         which zkg
+        export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
+        zkg test ${{ matrix.packages }}
     - id: zkg_test
       run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
