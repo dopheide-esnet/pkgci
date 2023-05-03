@@ -37,7 +37,6 @@ jobs:
       run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
         echo zkg test ${{ matrix.packages }} || $GITHUB_WORKSPACE/debug.sh ${{ matrix.packages }}
-        which zkg
         echo "${{ matrix.packages }}=[{\"${{ matrix.packages }}\": {\"status\": \"passed\"}}]" >> $GITHUB_OUTPUT
         echo "${{ matrix.packages }}" > test_data
         echo "${{ matrix.packages }}" | tr "/" "_" | awk '{ print "BLAA=" $1 }' >> $GITHUB_OUTPUT
