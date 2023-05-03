@@ -34,7 +34,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - id: doptest
-      run: which bash
+      run: |
+        pip install zkg
+        which zkg
     - id: zkg_test
       run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
