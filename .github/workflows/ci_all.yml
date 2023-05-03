@@ -33,6 +33,8 @@ jobs:
       blaa: "${{ steps.zkg_test.outputs.BLAA }}"
     steps:
     - uses: actions/checkout@v1
+    - id: doptest
+      run: which zgk
     - id: zkg_test
       run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
