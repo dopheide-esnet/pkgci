@@ -9,7 +9,7 @@ on:
 jobs:
   get_zkgs:
     name: Get package list
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     outputs:
       packages: ${{ steps.zkg_list.outputs.packages }}
     steps:
@@ -23,7 +23,9 @@ jobs:
     name: Test ${{ matrix.packages }}
     needs: get_zkgs
     continue-on-error: true
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    container:
+      image: zeek/zeek
     strategy:
       matrix: ${{fromJson(needs.get_zkgs.outputs.packages)}}
       fail-fast: false
@@ -35,9 +37,8 @@ jobs:
     - uses: actions/checkout@v1
     - id: doptest
       run: |
-        pip install zkg
-        which zkg
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
+        which zkg
         zkg test ${{ matrix.packages }}
     - id: zkg_test
       run: |
