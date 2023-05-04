@@ -35,14 +35,14 @@ jobs:
       blaa: "${{ steps.zkg_test.outputs.BLAA }}"
     steps:
     - uses: actions/checkout@v1
+#       export SHORT_NAME=`echo "${{ matrix.packages }}" |awk -F\/ '{ print $2 }'`
+#        cat /usr/local/zeek/var/lib/zkg/logs/$SHORT_NAME-plugin-build.log
     - id: doptest
       run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
         zeek --version
         zkg test ${{ matrix.packages }}
 	echo "${{ matrix.packages }}" |awk -F\/ '{ print $2 }'
-#	export SHORT_NAME=`echo "${{ matrix.packages }}" |awk -F\/ '{ print $2 }'` 
-#        cat /usr/local/zeek/var/lib/zkg/logs/$SHORT_NAME-plugin-build.log
     - id: zkg_test
       run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
