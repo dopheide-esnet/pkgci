@@ -38,7 +38,7 @@ jobs:
     - id: doptest
       run: |
         apt update
-        apt install cmake
+        apt install -y cmake
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
         zeek --version
         zkg test ${{ matrix.packages }} || true
