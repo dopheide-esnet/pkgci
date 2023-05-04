@@ -42,7 +42,7 @@ jobs:
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
         zeek --version
         zkg test ${{ matrix.packages }} || true
-        echo "${{ matrix.packages }}" |awk -F/ '{ print $2 }'
+        echo "${{ matrix.packages }}"
     - id: zkg_test
       run: |
         export PATH=/usr/local/zeek/bin:$HOME/.local/bin:$PATH
